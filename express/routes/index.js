@@ -30,7 +30,7 @@ router.post('/api/assessment', async function (req, res) {
 });
 router.post('/api/assessments', async function (req, res) {
 
-  let result = await db.collection("assessments").insertMany(req.body);
+  let result = await db.collection("assessments").insertMany(req.body.data);
 
   if (!result) return res.status(404).send('Unable to find the requested resource!');
 
@@ -45,7 +45,7 @@ router.get('/api/assessment/:id', async function (req, res) {
 
   let result = await db.collection("assessments").findOne({ _id: ObjectId(req.params.id) })
 
-  if (!result) return res.status(404).send('Unable to find the requested resource!');
+  if (!result) return res.status(404).send('Unable to find the requested record!');
 
   res.status(200).json({result});
 
@@ -75,6 +75,7 @@ router.get('/api/assessments/:field/:value', async function (req, res) {
   res.status(200).json({result});
 
 });
+
 router.put('/api/assessment/:id', async function (req, res) {
 
   if (!ObjectId.isValid(req.params.id))
@@ -85,7 +86,7 @@ router.put('/api/assessment/:id', async function (req, res) {
   );
 
   if (!result.value)
-    return res.status(404).send('Unable to find the requested resource!');
+    return res.status(404).send('Unable to find the requested record!');
 
   res.status(204).send();
 
@@ -96,10 +97,10 @@ router.delete('/api/assessment/:id', async function (req, res) {
   if (!ObjectId.isValid(req.params.id))
     return res.status(404).send('Unable to find the requested resource!');
 
-  var result = await db.collection("bassessments").findOneAndDelete({ _id: ObjectId(req.params.id) });
+  var result = await db.collection("assessments").findOneAndDelete({ _id: ObjectId(req.params.id) });
 
   if (!result.value)
-    return res.status(404).send('Unable to find the requested resource!');
+    return res.status(404).send('Unable to find the requested record!');
 
   res.status(204).send();
 
