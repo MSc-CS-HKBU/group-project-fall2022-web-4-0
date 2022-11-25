@@ -19,7 +19,7 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-router.post('/api/assessments', async function (req, res) {
+router.post('/api/assessment', async function (req, res) {
 
   let result = await db.collection("assessments").insertOne(req.body);
 
@@ -28,8 +28,17 @@ router.post('/api/assessments', async function (req, res) {
   res.status(201).json({ id: result.insertedId });
 
 });
+router.post('/api/assessments', async function (req, res) {
 
-router.get('/api/assessments/:id', async function (req, res) {
+  let result = await db.collection("assessments").insertMany(req.body);
+
+  if (!result) return res.status(404).send('Unable to find the requested resource!');
+
+  res.status(201).json({ id: result.insertedIds });
+
+});
+
+router.get('/api/assessment/:id', async function (req, res) {
 
   if (!ObjectId.isValid(req.params.id))
     return res.status(404).send('Unable to find the requested resource!');
@@ -38,7 +47,61 @@ router.get('/api/assessments/:id', async function (req, res) {
 
   if (!result) return res.status(404).send('Unable to find the requested resource!');
 
-  res.status(201).json({result});
+  res.status(200).json({result});
+
+});
+
+router.get('/api/assessments', async function (req, res) {
+  
+  let result = await db.collection("assessments").find().toArray();
+
+  if (!result) return res.status(404).send('Unable to find the requested resource!');
+
+  res.status(200).json({result});
+
+});
+
+router.get('/api/assessments/:field/:value', async function (req, res) {
+
+  var whereClause = {};
+
+  if (req.params.field && req.params.value)
+    whereClause[req.params.field] = req.params.value;
+
+  let result = await db.collection("assessments").find(whereClause).toArray();
+
+  if (!result) return res.status(404).send('Unable to find the requested resource!');
+
+  res.status(200).json({result});
+
+});
+router.put('/api/assessment/:id', async function (req, res) {
+
+  if (!ObjectId.isValid(req.params.id))
+    return res.status(404).send('Unable to find the requested resource!');
+
+  var result = await db.collection("assessments").findOneAndReplace(
+    { _id: ObjectId(req.params.id) }, req.body
+  );
+
+  if (!result.value)
+    return res.status(404).send('Unable to find the requested resource!');
+
+  res.status(204).send();
+
+});
+
+router.delete('/api/assessment/:id', async function (req, res) {
+
+  if (!ObjectId.isValid(req.params.id))
+    return res.status(404).send('Unable to find the requested resource!');
+
+  var result = await db.collection("bassessments").findOneAndDelete({ _id: ObjectId(req.params.id) });
+
+  if (!result.value)
+    return res.status(404).send('Unable to find the requested resource!');
+
+  res.status(204).send();
 
 });
 
