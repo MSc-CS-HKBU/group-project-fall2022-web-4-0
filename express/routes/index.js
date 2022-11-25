@@ -2,6 +2,9 @@ var express = require('express');
 var router = express.Router();
 
 var MongoClient = require('mongodb').MongoClient;
+
+var ObjectId = require('mongodb').ObjectId;
+
 var url = 'mongodb://comp7980group:j5CAghoqKa5aGaaP5xQ0mJkkzAacUQ1mu4GnuBctOCut0BUx7SQveoatW5d9X2koOpeByWq9jslPACDbonHIzg==@comp7980group.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@comp7980group@';
 
 var db;
@@ -23,6 +26,19 @@ router.post('/api/assessments', async function (req, res) {
   if (!result) return res.status(404).send('Unable to find the requested resource!');
 
   res.status(201).json({ id: result.insertedId });
+
+});
+
+router.get('/api/assessments/:id', async function (req, res) {
+
+  if (!ObjectId.isValid(req.params.id))
+    return res.status(404).send('Unable to find the requested resource!');
+
+  let result = await db.collection("assessments").findOne({ _id: ObjectId(req.params.id) })
+
+  if (!result) return res.status(404).send('Unable to find the requested resource!');
+
+  res.status(201).json({result});
 
 });
 
