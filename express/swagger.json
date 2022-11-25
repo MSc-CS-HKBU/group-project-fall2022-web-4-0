@@ -11,17 +11,12 @@
     "http"
   ],
   "paths": {
-    "/": {
-      "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      }
-    },
     "/api/assessment": {
       "post": {
-        "description": "",
-        "parameters": [],
+        "description": "CREATE a new assessment record",
+        "parameters": [
+          {"in":"body"}
+        ],
         "responses": {
           "201": {
             "description": "Created"
@@ -34,8 +29,10 @@
     },
     "/api/assessments": {
       "post": {
-        "description": "",
-        "parameters": [],
+        "description": "CREATE multiple assessment records",
+        "parameters": [          
+          {"in":"body"}
+        ],
         "responses": {
           "201": {
             "description": "Created"
@@ -46,7 +43,7 @@
         }
       },
       "get": {
-        "description": "",
+        "description": "READ multiple assessment records",
         "parameters": [],
         "responses": {
           "200": {
@@ -60,7 +57,7 @@
     },
     "/api/assessment/{id}": {
       "get": {
-        "description": "",
+        "description": "READ one specific assessment record",
         "parameters": [
           {
             "name": "id",
@@ -79,7 +76,7 @@
         }
       },
       "put": {
-        "description": "",
+        "description": "UPDATE one specific assessment record",
         "parameters": [
           {
             "name": "id",
@@ -98,7 +95,7 @@
         }
       },
       "delete": {
-        "description": "",
+        "description": "DELETE one specific assessment record",
         "parameters": [
           {
             "name": "id",
@@ -119,7 +116,7 @@
     },
     "/api/assessments/{field}/{value}": {
       "get": {
-        "description": "",
+        "description": "READ data by filtering with a field",
         "parameters": [
           {
             "name": "field",
@@ -140,17 +137,6 @@
           },
           "404": {
             "description": "Not Found"
-          }
-        }
-      }
-    },
-    "/users/": {
-      "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
           }
         }
       }

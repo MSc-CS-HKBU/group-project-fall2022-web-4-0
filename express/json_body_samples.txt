@@ -1,0 +1,50 @@
+// Online API Documentation
+// -- only works for GET and DELETE
+http://localhost:3000/api-doc/
+
+// CREATE or UPDATE a record by POST or PUT
+{
+      "StudentID": "12345678",
+      "SubjectID": "3",
+      "AssessmentType": "Exam",
+      "GradingType": "Score",
+      "MaxScore": 100,
+      "MinScore": 0,
+      "Score": 70,
+      "GradeRange": null,
+      "Grade": null,
+      "Rank": null,
+      "AssessmentDate": "2022-10-10"
+}
+
+// CREATE multiple records by POST
+{
+  "data": [
+    {
+      "StudentID": "12345678",
+      "SubjectID": "3",
+      "AssessmentType": "Test",
+      "GradingType": "Score",
+      "MaxScore": 100,
+      "MinScore": 0,
+      "Score": 70,
+      "GradeRange": null,
+      "Grade": null,
+      "Rank": null,
+      "AssessmentDate": "2022-10-10"
+    },
+    {
+      "StudentID": "12345678",
+      "SubjectID": "1",
+      "AssessmentType": "Test",
+      "GradingType": "Score",
+      "MaxScore": 100,
+      "MinScore": 0,
+      "Score": 80,
+      "GradeRange": null,
+      "Grade": null,
+      "Rank": null,
+      "AssessmentDate": "2022-10-10"
+    }
+  ]
+}
