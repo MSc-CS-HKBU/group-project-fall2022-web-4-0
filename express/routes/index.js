@@ -10,7 +10,7 @@ var url = 'mongodb://comp7980group:j5CAghoqKa5aGaaP5xQ0mJkkzAacUQ1mu4GnuBctOCut0
 var db;
 
 MongoClient.connect(url, function (err, client) {
-  db = client.db('assessmentsDB');
+  db = client.db('assessmentDB');
   console.log("DB connected");
 });
 
@@ -21,7 +21,7 @@ router.get('/', function(req, res, next) {
 
 router.post('/api/assessment', async function (req, res) {
 
-  let result = await db.collection("assessments").insertOne(req.body);
+  let result = await db.collection("assessment").insertOne(req.body);
 
   if (!result) return res.status(404).send('Unable to find the requested resource!');
 
@@ -30,7 +30,7 @@ router.post('/api/assessment', async function (req, res) {
 });
 router.post('/api/assessments', async function (req, res) {
 
-  let result = await db.collection("assessments").insertMany(req.body.data);
+  let result = await db.collection("assessment").insertMany(req.body.data);
 
   if (!result) return res.status(404).send('Unable to find the requested resource!');
 
@@ -43,7 +43,7 @@ router.get('/api/assessment/:id', async function (req, res) {
   if (!ObjectId.isValid(req.params.id))
     return res.status(404).send('Unable to find the requested resource!');
 
-  let result = await db.collection("assessments").findOne({ _id: ObjectId(req.params.id) })
+  let result = await db.collection("assessment").findOne({ _id: ObjectId(req.params.id) })
 
   if (!result) return res.status(404).send('Unable to find the requested record!');
 
@@ -53,7 +53,7 @@ router.get('/api/assessment/:id', async function (req, res) {
 
 router.get('/api/assessments', async function (req, res) {
   
-  let result = await db.collection("assessments").find().toArray();
+  let result = await db.collection("assessment").find().toArray();
 
   if (!result) return res.status(404).send('Unable to find the requested resource!');
 
@@ -68,7 +68,7 @@ router.get('/api/assessments/:field/:value', async function (req, res) {
   if (req.params.field && req.params.value)
     whereClause[req.params.field] = req.params.value;
 
-  let result = await db.collection("assessments").find(whereClause).toArray();
+  let result = await db.collection("assessment").find(whereClause).toArray();
 
   if (!result) return res.status(404).send('Unable to find the requested resource!');
 
@@ -81,7 +81,7 @@ router.put('/api/assessment/:id', async function (req, res) {
   if (!ObjectId.isValid(req.params.id))
     return res.status(404).send('Unable to find the requested resource!');
 
-  var result = await db.collection("assessments").findOneAndReplace(
+  var result = await db.collection("assessment").findOneAndReplace(
     { _id: ObjectId(req.params.id) }, req.body
   );
 
@@ -97,7 +97,7 @@ router.delete('/api/assessment/:id', async function (req, res) {
   if (!ObjectId.isValid(req.params.id))
     return res.status(404).send('Unable to find the requested resource!');
 
-  var result = await db.collection("assessments").findOneAndDelete({ _id: ObjectId(req.params.id) });
+  var result = await db.collection("assessment").findOneAndDelete({ _id: ObjectId(req.params.id) });
 
   if (!result.value)
     return res.status(404).send('Unable to find the requested record!');
