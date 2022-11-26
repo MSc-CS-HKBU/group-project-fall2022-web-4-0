@@ -4,8 +4,9 @@ http://localhost:3000/api-doc/
 
 // CREATE or UPDATE a record by POST or PUT
 {
-      "StudentID": "12345678",
-      "SubjectID": "3",
+      "StudentID": "51235123",
+      "Subject": "MATH",
+      "Class": "4A",
       "AssessmentType": "Exam",
       "GradingType": "Score",
       "MaxScore": 100,
@@ -22,7 +23,8 @@ http://localhost:3000/api-doc/
   "data": [
     {
       "StudentID": "12345678",
-      "SubjectID": "3",
+      "Subject": "CHIN",
+      "Class": "5B",
       "AssessmentType": "Test",
       "GradingType": "Score",
       "MaxScore": 100,
@@ -35,7 +37,8 @@ http://localhost:3000/api-doc/
     },
     {
       "StudentID": "12345678",
-      "SubjectID": "1",
+      "Subject": "ENGL",
+      "Class": "5B",
       "AssessmentType": "Test",
       "GradingType": "Score",
       "MaxScore": 100,
