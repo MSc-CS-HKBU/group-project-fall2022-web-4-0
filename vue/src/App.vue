@@ -6,7 +6,7 @@
     <div class="container-fluid">
       <router-link to="/" class="navbar-brand">
         <img src="./assets/marko.svg" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
-        Marko
+        marko
       </router-link>
       
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" @click="offcanvas">
@@ -16,13 +16,13 @@
       <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
           <li class="nav-item">
-            <router-link to="/about" class="nav-link">Input</router-link>
+            <router-link to="/input" class="nav-link">Input</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/about" class="nav-link">Query</router-link>
+            <router-link to="/query" class="nav-link">Query</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/about" class="nav-link">Analyze</router-link>
+            <router-link to="/analyze" class="nav-link">Analyze</router-link>
           </li>
           <li class="nav-item">
             <router-link to="/about" class="nav-link">About</router-link>
@@ -41,7 +41,7 @@
   <div class="offcanvas-header">
     <div class="offcanvas-title">
         <img src="./assets/marko.svg" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
-        Marko
+        marko
       </div>
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" @click="offcanvas"></button>
   </div>
@@ -49,16 +49,7 @@
     <div>
       Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists, etc.
     </div>
-    <div class="dropdown mt-3">
-      <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-        Dropdown button
-      </button>
-      <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="#">Action</a></li>
-        <li><a class="dropdown-item" href="#">Another action</a></li>
-        <li><a class="dropdown-item" href="#">Something else here</a></li>
-      </ul>
-    </div>
+
   </div>
 </div>
 
@@ -66,8 +57,7 @@
 </template>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;700&family=Roboto+Condensed&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;700&family=Roboto+Condensed&display=swap');
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -76,6 +66,9 @@
   color: #2c3e50;
 }
 
+.container {
+  margin-bottom: 40px;
+}
 
 .top-bar {
   background-color: #000000;
@@ -114,6 +107,9 @@ A.navbar-brand:hover img {
   box-shadow: 0px 0px 10px 0px rgba(255, 255, 255,0.75);
 }
 
+nav {
+  margin-bottom: 20px;
+}
 
 .navbar-text {
   font-family: 'Roboto Condensed', sans-serif;
