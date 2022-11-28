@@ -4,7 +4,7 @@
       <img alt="Marko logo" src="../assets/marko.png" />
       <div class="app-name">marko</div>
       <div class="tagline">Mark Management System</div>
-      <div class="description"><span class="app-name">marko</span> is your one-stop solution to input student marks, query individual records and analyze past results with various statistical charts.</div>
+      <div class="description"><span class="app-name">marko</span> is your one-stop solution to input students' assessment marks, query individual records and analyze past results with various statistical charts.</div>
     </div>
     
     <div class="row">
@@ -14,7 +14,7 @@
           <div class="card-body">
             <h5 class="card-title">Thomas Tsoi</h5>
             <h6>MSc DAAI, HKBU</h6>
-            <img src="../assets/vue.png" class="text-center framework" />
+            <a href="https://vuejs.org/"><img src="../assets/vue.png" class="text-center framework" /></a>
             <p class="card-text">Front-End Engineer</p>
           </div>
           <div class="card-footer">
@@ -26,7 +26,7 @@
           <div class="card-body">
             <h5 class="card-title">Angus Yip</h5>
             <h6>MSc DAAI, HKBU</h6>
-            <img src="../assets/express.png" class="text-center framework" />
+            <a href="https://expressjs.com/"><img src="../assets/express.png" class="text-center framework" /></a>
             <p class="card-text">Back-End Engineer</p>
           </div>
           <div class="card-footer">
@@ -64,7 +64,7 @@ h6 {
   font-family: 'Kanit', sans-serif;
   font-weight: 300;
   font-size: 1em;
-  
+  margin-bottom: 10px;
 }
 
 .logo .description {

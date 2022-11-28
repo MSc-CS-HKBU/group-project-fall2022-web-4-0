@@ -5,7 +5,7 @@
   <nav class="navbar navbar-expand-md navbar-dark sticky-top" style="background-color: #1b192e">
     <div class="container-fluid">
       <router-link to="/" class="navbar-brand">
-        <img src="./assets/marko.svg" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
+        <img src="./assets/marko.svg" alt="Logo" class="d-inline-block align-text-top">
         marko
       </router-link>
       
@@ -88,6 +88,10 @@ A.navbar-brand {
   font-family: 'Kanit', sans-serif;
   font-weight: 700;
   color: rgb(230, 230, 230);
+  font-size: 28px;
+  line-height: 30px;
+  margin: 0 30px 0 0;
+  padding: 0;
 }
 
 A.navbar-brand img {
@@ -95,6 +99,7 @@ A.navbar-brand img {
   -webkit-box-shadow:0px 0px 5px 0px rgba(230, 230, 230,0.75);
   -moz-box-shadow: 0px 0px 5px 0px rgba(230, 230, 230,0.75);
   box-shadow: 0px 0px 5px 0px rgba(230, 230, 230,0.75);
+  width: 40px;
 }
 
 A.navbar-brand:hover {
@@ -122,7 +127,7 @@ nav {
 
 .nav-item {
   font-weight: bold;
-  padding-top: 5px;
+  padding-top: 7px;
 }
 
 .offcanvas {
