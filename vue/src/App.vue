@@ -107,6 +107,10 @@ A.navbar-brand:hover img {
   box-shadow: 0px 0px 10px 0px rgba(255, 255, 255,0.75);
 }
 
+A.router-link-active {
+  color: rgba(255,255,255, 0.75);
+}
+
 nav {
   margin-bottom: 20px;
 }
