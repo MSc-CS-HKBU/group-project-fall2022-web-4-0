@@ -1,11 +1,13 @@
 <template>
-
-  <nav class="navbar navbar-expand-md navbar-dark" style="background-color: #1b192e">
+  <div class="top-bar">
+    COMP7270 & COMP7980 Web and Mobile Programming
+  </div>
+  <nav class="navbar navbar-expand-md navbar-dark sticky-top" style="background-color: #1b192e">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">
+      <router-link to="/" class="navbar-brand">
         <img src="./assets/marko.svg" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
         Marko
-      </a>
+      </router-link>
       
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" @click="offcanvas">
         <span class="navbar-toggler-icon"></span>
@@ -14,7 +16,13 @@
       <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
           <li class="nav-item">
-            <router-link to="/" class="nav-link">Home</router-link>
+            <router-link to="/about" class="nav-link">Input</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/about" class="nav-link">Query</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/about" class="nav-link">Analyze</router-link>
           </li>
           <li class="nav-item">
             <router-link to="/about" class="nav-link">About</router-link>
@@ -29,7 +37,7 @@
   </nav>
 
 
-  <div class="offcanvas offcanvas-start show text-bg-dark" tabindex="-1" id="offcanvas">
+  <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvas" data-bs-backdrop="static" >
   <div class="offcanvas-header">
     <div class="offcanvas-title">
         <img src="./assets/marko.svg" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
@@ -68,6 +76,15 @@
   color: #2c3e50;
 }
 
+
+.top-bar {
+  background-color: #000000;
+  color: rgb(128,128,128);
+  font-size: 0.7em;
+  text-align: left;
+  padding: 2px 10px;
+}
+
 .offcanvas-title {
   font-family: 'Kanit', sans-serif;
   font-weight: 700;
@@ -103,6 +120,14 @@ A.navbar-brand:hover img {
   font-size: 0.9em;
 }
 
+.nav-item {
+  font-weight: bold;
+  padding-top: 5px;
+}
+
+.offcanvas {
+    width: 340px !important;
+}
 
 body {
   background-color: #d9dbff !important;
