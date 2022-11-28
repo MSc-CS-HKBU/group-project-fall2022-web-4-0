@@ -32,7 +32,7 @@
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <button class="btn btn-primary" type="submit">Search</button>
+                            <button class="btn btn-dark" type="submit">Search</button>
                         </div>
                     </form>
                 </div>
@@ -46,6 +46,29 @@
     </div>
   </template>
   
+
+<style>
+.nav-tabs .nav-link {
+  color: #422874;
+}
+.nav-tabs .nav-link:hover {
+  color: #550050;
+}
+
+
+.btn:hover {
+  background-color: #550050;
+}
+
+
+</style>
+
+
+
+
+
+
+
   <script>
   
   export default {

@@ -1,7 +1,9 @@
 <template>
-    <div class="home">
+    <div class="container">
+        <div class="card pt-3 ps-5 pe-5 pb-3">
       Input
 
+        </div>
     </div>
   </template>
   
