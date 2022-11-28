@@ -7,7 +7,7 @@
         Marko
       </a>
       
-      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" aria-expanded="false" aria-label="Toggle navigation" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" @click="offcanvas">
         <span class="navbar-toggler-icon"></span>
       </button>
 
@@ -28,28 +28,31 @@
     </div>
   </nav>
 
-  <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-    <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+
+  <div class="offcanvas offcanvas-start show text-bg-dark" tabindex="-1" id="offcanvas">
+  <div class="offcanvas-header">
+    <div class="offcanvas-title">
+        <img src="./assets/marko.svg" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
+        Marko
+      </div>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" @click="offcanvas"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div>
+      Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists, etc.
     </div>
-    <div class="offcanvas-body">
-      <div>
-        Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists, etc.
-      </div>
-      <div class="dropdown mt-3">
-        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-          Dropdown button
-        </button>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="#">Action</a></li>
-          <li><a class="dropdown-item" href="#">Another action</a></li>
-          <li><a class="dropdown-item" href="#">Something else here</a></li>
-        </ul>
-      </div>
+    <div class="dropdown mt-3">
+      <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+        Dropdown button
+      </button>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="#">Action</a></li>
+        <li><a class="dropdown-item" href="#">Another action</a></li>
+        <li><a class="dropdown-item" href="#">Something else here</a></li>
+      </ul>
     </div>
   </div>
-
+</div>
 
   <router-view/>
 </template>
@@ -63,6 +66,12 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+
+.offcanvas-title {
+  font-family: 'Kanit', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
 }
 
 A.navbar-brand {
@@ -100,3 +109,14 @@ body {
 }
 
 </style>
+
+<script>
+
+export default {
+  methods: {
+    offcanvas(){
+        document.getElementById("offcanvas").classList.toggle("show");
+    }
+  }
+}
+</script>
