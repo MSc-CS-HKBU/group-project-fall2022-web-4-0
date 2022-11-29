@@ -128,8 +128,8 @@ export default {
             let Subject = document.getElementById("subject").value;
             let Class = document.querySelector('input[name="class"]:checked').value;
             let AssessmentType = document.getElementById("assessment_type").value;
-            let StartDate = new Date(document.getElementById("assessment_date-start").value).getTime();
-            let EndDate = new Date(document.getElementById("assessment_date-end").value).getTime();
+            let StartDate = document.getElementById("assessment_date-start").value;
+            let EndDate = document.getElementById("assessment_date-end").value;
 
             let response = await fetch("/api/assessments/query", {
                     StudentID: StudentID,
@@ -143,6 +143,7 @@ export default {
 
             if (response.ok) {
                 let json = await response.json();        
+                
                 
                 console.log("ok" + json);
                 
