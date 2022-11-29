@@ -160,21 +160,8 @@ router.post('/api/plotChartData', async function (req, res) {
 
 });
 
-router.get('/api/plotChartDSE/:flag', async function (req, res) {
-     
-  // var whereClause = {
-  //   AssessmentType: "DSE",
-  //   $or: [
-  //     {
-  //       Subject: { $in: ["CHIN", "ENG"] },
-  //       Grade: { $in: ["3", "4", "5", "6", "7"] }
-  //     },
-  //     {
-  //       Subject: { $in: ["MATH", "LIBS"] },
-  //       Grade: { $in: ["2", "3", "4", "5", "6", "7"] }
-  //     }
-  //   ]
-  // };
+router.get('/api/plotChartPassDSE', async function (req, res) {
+
   var groupBy1 = [
     {
       $match:{
@@ -183,7 +170,7 @@ router.get('/api/plotChartDSE/:flag', async function (req, res) {
     },
     {
       $group: {
-        _id: "StudentID",
+        _id: "$StudentID",
         count: { $sum: 1 }
       }
     }
@@ -207,28 +194,37 @@ router.get('/api/plotChartDSE/:flag', async function (req, res) {
     },
     {
       $group: {
-        _id: "StudentID",
+        _id: "$StudentID",
         count: { $sum: 1 }
+      }
+    },
+    {
+      $match: {
+        count: { $gte: 4 }
       }
     }
   ];
 
-  //let result = await db.collection("assessment").find(whereClause).toArray();
-
   let result1 = await db.collection("assessment").aggregate(groupBy1).toArray();
+  console.log(result1.length);
 
   let result2 = await db.collection("assessment").aggregate(groupBy2).toArray();
 
   if (!result1) return res.status(404).send('Unable to find the requested resource!');
 
-  if (req.params.flag == "total") return res.status(200).json({result1});
+  // var num_total = result1.length;
+  var num_pass = result2.length;
+  var num_fail = result1.length - result2.length;
 
-  if (req.params.flag == "pass") return res.status(200).json({result2});
-
-  // flag == "fail"
-  result1[0].count = result1[0].count - result2[0].count;
-
-  res.status(200).json({result1});
+  res.status(200).json({result:[
+    {
+      name: "Meet or Above (3322)",
+      value: num_pass
+    }, {
+      name: "Not Meet Minimum",
+      value: num_fail
+    }
+  ]});
 
 });
 
