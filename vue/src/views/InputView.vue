@@ -6,18 +6,17 @@
 
           <form method="post" @submit.prevent="presubmit" id="input_form">
             <div class="mb-3 row">
-                <label for="staticEmail" class="col-md-3 col-lg-2 col-form-label">ID</label>
+                <label for="staticEmail" class="col-md-3 col-lg-2 col-form-label">Student ID</label>
                 <div class="col-md-9 col-lg-10">
                     <input type="number" class="form-control text-center" id="id" name="id" min="100000" max="999999" maxlength="6" required placeholder="Student ID">
                 </div>
             </div>
-
             
             <div class="mb-3 row">
                 <label for="inputPassword" class="col-md-3 col-lg-2 col-form-label">Subject</label>
                 <div class="col-md-9 col-lg-10">
                     <select class="form-select text-center" id="subject" name="subject" required>
-                        <option selected disabled>Select subject:</option>
+                        <option value="" selected disabled>Select subject:</option>
                         <option value="CHIN">Chinese</option>
                         <option value="ENG">English</option>
                         <option value="MATH">Mathematics</option>
@@ -54,7 +53,7 @@
                 <label for="inputPassword" class="col-md-3 col-lg-2 col-form-label">Assessment Type</label>
                 <div class="col-md-9 col-lg-10">
                     <select class="form-select text-center" id="assessment_type"  name="assessment_type" required>
-                        <option selected disabled>Select assessement type:</option>
+                        <option value="" selected disabled>Select assessement type:</option>
                         <option value="Test">Test</option>
                         <option value="Exam">Exam</option>
                         <option value="DSE">DSE</option>
@@ -113,7 +112,7 @@
                   <label for="inputPassword" class="col-md-3 col-lg-2 col-form-label">Grade Range</label>
                   <div class="col-md-9 col-lg-10">
                       <select class="form-select text-center" id="grade_range" name="grade_range">
-                          <option selected disabled>Select grade range:</option>
+                          <option value="" selected disabled>Select grade range:</option>
                           <option value="1 2 3 4 5 6 7" selected>1 2 3 4 5 5* 5**</option>
                       </select>
                   </div>
@@ -122,7 +121,7 @@
                   <label for="inputPassword" class="col-md-3 col-lg-2 col-form-label">Grade Range</label>
                   <div class="col-md-9 col-lg-10">
                       <select class="form-select text-center" id="grade" name="grade">
-                          <option selected disabled>Select grade:</option>
+                          <option value="" selected disabled>Select grade:</option>
                           <option value="1">1</option>
                           <option value="2">2</option>
                           <option value="3">3</option>
@@ -136,7 +135,7 @@
             </div>
 
             <div class="mb-3 row">
-                <button class="btn btn-dark" type="submit">Search</button>
+                <button class="btn btn-dark" type="submit">Create new record</button>
             </div>
         </form>
         </div>
@@ -199,7 +198,7 @@
       let Rank = document.getElementById("rank").value;
       let GradeRange = document.getElementById("grade_range").value;
       let Grade = document.getElementById("grade").value;
-      let AssessmentDate = document.getElementById("assessment_date").value;
+      let AssessmentDate = new Date(document.getElementById("assessment_date").value).getTime();
 
       StudentID = parseInt(StudentID);
       if (GradingType == "Score") {
@@ -235,7 +234,7 @@
           Rank: Rank,
           Grade: Grade,
           GradeRange: GradeRange,
-          AssessmentDate: AssessmentDate
+          AssessmentDate: {$date: {$numberLong: AssessmentDate}}
         })
       });
 
