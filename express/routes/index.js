@@ -70,9 +70,6 @@ router.get('/api/assessments/query', async function (req, res) {
   // localhost:3000/api/assessments/query?Class=C&StartDate=2021-01-01&EndDate=2022-11-11
   // localhost:3000/api/assessments/query?Class=C&StartDate="2021-09-03T00:00:00.000Z"&EndDate="2022-11-11"
   
-  if (req.body.constructor === Object && Object.keys(req.body).length === 0)
-    return res.status(404).send('Unable to find the requested resource!');
-
   var whereClause = {};
   console.log(req.query.Class);
 
@@ -161,7 +158,7 @@ router.post('/api/plotChartData', async function (req, res) {
 });
 
 router.get('/api/plotChartPassDSE', async function (req, res) {
-
+  // Reference: https://www.hkeaa.edu.hk/en/recognition/hkdse_recognition/local/
   var groupBy1 = [
     {
       $match:{
