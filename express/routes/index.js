@@ -61,6 +61,45 @@ router.get('/api/assessments', async function (req, res) {
 
 });
 
+router.get('/api/assessments/query', async function (req, res) {
+
+  // Sample API Calls:
+  // localhost:3000/api/assessments/query?StudentID=282323
+  // localhost:3000/api/assessments/query?Class=B&AssessmentType=DSE
+  // localhost:3000/api/assessments/query?Class=A&Subject=ENG&AssessmentType=Test
+  // localhost:3000/api/assessments/query?Class=C&StartDate=2021-01-01&EndDate=2022-11-11
+  // localhost:3000/api/assessments/query?Class=C&StartDate="2021-09-03T00:00:00.000Z"&EndDate="2022-11-11"
+  
+  if (req.body.constructor === Object && Object.keys(req.body).length === 0)
+    return res.status(404).send('Unable to find the requested resource!');
+
+  var whereClause = {};
+  console.log(req.query.Class);
+
+  if (req.query.StudentID)
+    whereClause.StudentID = parseInt(req.query.StudentID);
+
+  if (req.query.Class)
+    whereClause.Class = req.query.Class;
+  
+  if (req.query.Subject)
+    whereClause.Subject = req.query.Subject;
+
+  if (req.query.AssessmentType)
+    whereClause.AssessmentType = req.query.AssessmentType;
+
+  if (req.query.StartDate && req.query.EndDate)
+      whereClause.AssessmentDate = {$gte: new Date(req.query.StartDate), $lte: new Date(req.query.EndDate)};
+
+  let result = await db.collection("assessment").find(whereClause).toArray();
+
+  if (!result) return res.status(404).send('Unable to find the requested resource!');
+
+  res.status(200).json({result});
+
+});
+
+
 router.get('/api/assessments/:field/:value', async function (req, res) {
 
   var whereClause = {};
@@ -103,6 +142,93 @@ router.delete('/api/assessment/:id', async function (req, res) {
     return res.status(404).send('Unable to find the requested record!');
 
   res.status(204).send();
+
+});
+
+router.post('/api/plotChartData', async function (req, res) {
+
+  if (req.body.constructor === Object && Object.keys(req.body).length === 0)
+    return res.status(404).send('Unable to find the requested resource!');
+     
+  var whereClause = req.body;
+
+  let result = await db.collection("assessment").find(whereClause).toArray();
+
+  if (!result) return res.status(404).send('Unable to find the requested resource!');
+
+  res.status(200).json({result});
+
+});
+
+router.get('/api/plotChartDSE/:flag', async function (req, res) {
+     
+  // var whereClause = {
+  //   AssessmentType: "DSE",
+  //   $or: [
+  //     {
+  //       Subject: { $in: ["CHIN", "ENG"] },
+  //       Grade: { $in: ["3", "4", "5", "6", "7"] }
+  //     },
+  //     {
+  //       Subject: { $in: ["MATH", "LIBS"] },
+  //       Grade: { $in: ["2", "3", "4", "5", "6", "7"] }
+  //     }
+  //   ]
+  // };
+  var groupBy1 = [
+    {
+      $match:{
+        AssessmentType: "DSE"
+      }
+    },
+    {
+      $group: {
+        _id: "StudentID",
+        count: { $sum: 1 }
+      }
+    }
+  ];
+
+  var groupBy2 = [
+    {
+      $match:{
+        AssessmentType: "DSE",
+        $or: [
+          {
+            Subject: { $in: ["CHIN", "ENG"] },
+            Grade: { $in: ["3", "4", "5", "6", "7"] }
+          },
+          {
+            Subject: { $in: ["MATH", "LIBS"] },
+            Grade: { $in: ["2", "3", "4", "5", "6", "7"] }
+          }
+        ]      
+      }
+    },
+    {
+      $group: {
+        _id: "StudentID",
+        count: { $sum: 1 }
+      }
+    }
+  ];
+
+  //let result = await db.collection("assessment").find(whereClause).toArray();
+
+  let result1 = await db.collection("assessment").aggregate(groupBy1).toArray();
+
+  let result2 = await db.collection("assessment").aggregate(groupBy2).toArray();
+
+  if (!result1) return res.status(404).send('Unable to find the requested resource!');
+
+  if (req.params.flag == "total") return res.status(200).json({result1});
+
+  if (req.params.flag == "pass") return res.status(200).json({result2});
+
+  // flag == "fail"
+  result1[0].count = result1[0].count - result2[0].count;
+
+  res.status(200).json({result1});
 
 });
 
