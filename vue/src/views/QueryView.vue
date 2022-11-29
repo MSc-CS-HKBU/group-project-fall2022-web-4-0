@@ -4,10 +4,10 @@
 
             <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Parameters</button>
+                    <button class="nav-link active" id="params-tab" data-bs-toggle="tab" data-bs-target="#params-tab-pane" type="button" role="tab" aria-controls="params-tab-pane" aria-selected="true">Parameters</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Results</button>
+                    <button class="nav-link" id="results-tab" data-bs-toggle="tab" data-bs-target="#results-tab-pane" type="button" role="tab" aria-controls="results-tab-pane" aria-selected="false">Results</button>
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
@@ -102,7 +102,6 @@
   color: #550050;
 }
 
-
 .btn:hover {
   background-color: #550050;
 }
@@ -113,11 +112,8 @@
 
 
 
-
-
-
 <script>
-  
+
 export default {
     name: 'QueryView',
 
@@ -126,7 +122,9 @@ export default {
 
             let StudentID = document.getElementById("id").value;
             let Subject = document.getElementById("subject").value;
-            let Class = document.querySelector('input[name="class"]:checked').value;
+
+            let Class = document.querySelector('input[name="class"]:checked') ? document.querySelector('input[name="class"]:checked').value : null;
+
             let AssessmentType = document.getElementById("assessment_type").value;
             let StartDate = document.getElementById("assessment_date-start").value;
             let EndDate = document.getElementById("assessment_date-end").value;
@@ -144,7 +142,9 @@ export default {
             if (response.ok) {
                 let json = await response.json();        
                 
-                
+                document.querySelector('#myTab button[data-bs-target="#results-tab-pane"]').show() // Select tab by name
+
+
                 console.log("ok" + json);
                 
             } else {
