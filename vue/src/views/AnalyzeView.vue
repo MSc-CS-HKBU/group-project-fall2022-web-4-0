@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="card pt-3 ps-5 pe-5 pb-3">
+        <div class="card pt-3 ps-5 pe-5 pb-3" style="max-width: 800px; margin: 0 auto;">
           <select class="form-select" id="chart-select" aria-label="Default select example" @change="show_chart">
               <option selected disabled>Select statistical chart</option>
               <option value="plotChartAssessmentByClass">Assessment Comparison by Class</option>
@@ -109,7 +109,7 @@ export default {
           }];
         
         options1.value = {
-          labels: date.map(a => new Date(a).toLocaleDateString("en-US")),
+          labels: date.map(a => new Date(a).toLocaleDateString("en-UK")),
           title: {
             text: "Assessment Score Comparison by Class"
           },
