@@ -71,7 +71,6 @@ router.get('/api/assessments/query', async function (req, res) {
   // localhost:3000/api/assessments/query?Class=C&StartDate="2021-09-03T00:00:00.000Z"&EndDate="2022-11-11"
   
   var whereClause = {};
-  console.log(req.query.Class);
 
   if (req.query.StudentID)
     whereClause.StudentID = parseInt(req.query.StudentID);
@@ -95,7 +94,6 @@ router.get('/api/assessments/query', async function (req, res) {
   res.status(200).json({result});
 
 });
-
 
 router.get('/api/assessments/:field/:value', async function (req, res) {
 
@@ -203,7 +201,9 @@ router.get('/api/plotChartPassDSE', async function (req, res) {
   ];
 
   let result1 = await db.collection("assessment").aggregate(groupBy1).toArray();
-  console.log(result1.length);
+  // TESTING:
+  // console.log(result1.length);
+  // return res.status(200).json({result1});
 
   let result2 = await db.collection("assessment").aggregate(groupBy2).toArray();
 
