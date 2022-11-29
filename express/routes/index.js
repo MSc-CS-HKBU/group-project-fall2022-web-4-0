@@ -62,16 +62,10 @@ router.get('/api/assessments', async function (req, res) {
 });
 
 router.get('/api/assessments/query', async function (req, res) {
-
-  // Sample API Calls:
-  // localhost:3000/api/assessments/query?StudentID=282323
-  // localhost:3000/api/assessments/query?Class=B&AssessmentType=DSE
-  // localhost:3000/api/assessments/query?Class=A&Subject=ENG&AssessmentType=Test
-  // localhost:3000/api/assessments/query?Class=C&StartDate=2021-01-01&EndDate=2022-11-11
-  // localhost:3000/api/assessments/query?Class=C&StartDate="2021-09-03T00:00:00.000Z"&EndDate="2022-11-11"
   
+  var perPage = Math.max(req.query.perPage, 20) || 20;
+
   var whereClause = {};
-  console.log(req.query.Class);
 
   if (req.query.StudentID)
     whereClause.StudentID = parseInt(req.query.StudentID);
@@ -88,14 +82,18 @@ router.get('/api/assessments/query', async function (req, res) {
   if (req.query.StartDate && req.query.EndDate)
       whereClause.AssessmentDate = {$gte: new Date(req.query.StartDate), $lte: new Date(req.query.EndDate)};
 
-  let result = await db.collection("assessment").find(whereClause).toArray();
+  let result = await db.collection("assessment").find(whereClause, {
+    limit: perPage,
+    skip: perPage * (Math.max(req.query.page - 1, 0) || 0)
+  }).toArray();
 
   if (!result) return res.status(404).send('Unable to find the requested resource!');
 
-  res.status(200).json({result});
+  var pages = Math.ceil(await db.collection("assessment").find(whereClause).count() / perPage);
+
+  res.status(200).json({assessment:result, pages: pages, perPage: perPage});
 
 });
-
 
 router.get('/api/assessments/:field/:value', async function (req, res) {
 
@@ -233,6 +231,7 @@ router.get('/api/plotChartDSEGrade', async function (req, res) {
 });
 
 router.get('/api/plotChartPassDSE', async function (req, res) {
+  
   // Reference: https://www.hkeaa.edu.hk/en/recognition/hkdse_recognition/local/
   var groupBy1 = [
     {
@@ -278,7 +277,9 @@ router.get('/api/plotChartPassDSE', async function (req, res) {
   ];
 
   let result1 = await db.collection("assessment").aggregate(groupBy1).toArray();
-  console.log(result1.length);
+  // TESTING:
+  // console.log(result1.length);
+  // return res.status(200).json({result1});
 
   let result2 = await db.collection("assessment").aggregate(groupBy2).toArray();
 
