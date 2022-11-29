@@ -16,21 +16,54 @@
                         <div class="mb-3 row">
                             <label for="staticEmail" class="col-md-3 col-lg-2 col-form-label">ID</label>
                             <div class="col-md-9 col-lg-10">
-                                <input type="text" class="form-control" id="staticEmail" value="">
+                                <input type="number" class="form-control" id="staticEmail"  min="100000" max="999999">
                             </div>
                         </div>
                         <div class="mb-3 row">
                             <label for="inputPassword" class="col-md-3 col-lg-2 col-form-label">Class</label>
                             <div class="col-md-9 col-lg-10">
-                                <input type="password" class="form-control" id="inputPassword">
+                                <div class="btn-group" style="width:100%" role="group" aria-label="Basic checkbox toggle button group">
+                                    <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off">
+                                    <label class="btn btn-outline-dark" for="btncheck1">A</label>
+
+                                    <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off">
+                                    <label class="btn btn-outline-dark" for="btncheck2">B</label>
+
+                                    <input type="checkbox" class="btn-check" id="btncheck3" autocomplete="off">
+                                    <label class="btn btn-outline-dark" for="btncheck3">C</label>
+
+                                    <input type="checkbox" class="btn-check" id="btncheck4" autocomplete="off">
+                                    <label class="btn btn-outline-dark" for="btncheck4">D</label>
+                                </div>
                             </div>
                         </div>
                         <div class="mb-3 row">
                             <label for="inputPassword" class="col-md-3 col-lg-2 col-form-label">Assessment Type</label>
                             <div class="col-md-9 col-lg-10">
-                                <input type="password" class="form-control" id="inputPassword">
+                                <select class="form-select" >
+                                    <option selected disabled>Select assessement type:</option>
+                                    <option value="1">Test</option>
+                                    <option value="2">Exam</option>
+                                    <option value="3">DSE</option>
+                                </select>
                             </div>
                         </div>
+                        <div class="mb-3 row">
+                            <label for="inputPassword" class="col-md-3 col-lg-2 col-form-label">Assessment Date</label>
+                            <div class="col-md-4 col-lg-4">
+                                <input type="date" id="start" class="form-control" name="period-start" value="2018-09-01">
+                            </div>
+                            <div class="col-md-1 col-lg-2">
+                                <div style="line-height: 40px;">to</div>
+                            </div>
+                            <div class="col-md-4 col-lg-4">
+                                <input type="date" id="end" class="form-control" name="period-end" value="2022-08-31">
+                            </div>
+                        </div>
+
+                        
+
+
                         <div class="mb-3 row">
                             <button class="btn btn-dark" type="submit">Search</button>
                         </div>

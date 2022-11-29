@@ -40,15 +40,27 @@
   <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvas" data-bs-backdrop="static" >
   <div class="offcanvas-header">
     <div class="offcanvas-title">
-        <img src="./assets/marko.svg" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
+        <img src="./assets/marko.svg" alt="Logo" class="d-inline-block align-text-top">
         marko
       </div>
-    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" @click="offcanvas"></button>
+    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close" @click="offcanvas"></button>
   </div>
   <div class="offcanvas-body">
-    <div>
-      Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists, etc.
-    </div>
+
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <router-link to="/input" class="nav-link">Input</router-link>
+      </li>
+      <li class="nav-item">
+        <router-link to="/query" class="nav-link">Query</router-link>
+      </li>
+      <li class="nav-item">
+        <router-link to="/analyze" class="nav-link">Analyze</router-link>
+      </li>
+      <li class="nav-item">
+        <router-link to="/about" class="nav-link">About</router-link>
+      </li>
+    </ul>
 
   </div>
 </div>
@@ -81,7 +93,7 @@
 .offcanvas-title {
   font-family: 'Kanit', sans-serif;
   font-weight: 700;
-  font-size: 20px;
+  font-size: 28px;
 }
 
 A.navbar-brand {
@@ -94,7 +106,7 @@ A.navbar-brand {
   padding: 0;
 }
 
-A.navbar-brand img {
+A.navbar-brand img, .offcanvas-title img {
   border-radius: 50%;
   -webkit-box-shadow:0px 0px 5px 0px rgba(230, 230, 230,0.75);
   -moz-box-shadow: 0px 0px 5px 0px rgba(230, 230, 230,0.75);
@@ -136,6 +148,10 @@ nav {
 
 body {
   background-color: #d9dbff !important;
+}
+
+.btn-close:hover {
+  background-color: #ffffff;
 }
 
 </style>
