@@ -88,16 +88,17 @@
                     <div class="list-group" id="results-list" @click="selectItem">
                         <a href="#" class="list-group-item list-group-item-action text-start" v-for="(item, index) in records" :key="index" @click="selectItem">
                             <div class="d-flex w-100 justify-content-between">
-                            <h6 class="mb-1"><strong>Student ID:</strong> {{ item.StudentID }}</h6>
-                            <h6 class="mb-1"><strong>Class:</strong>  {{ item.Class }}</h6>
-                            <h6 class="mb-1"><strong>Subject:</strong>  {{ item.Subject }}</h6>
+                            <h6 class="mb-1"><strong>{{ item.StudentID }}</strong> | {{ item.Class }} | {{ item.Subject }}
+                                <div v-if="item.GradingType=='Score'"><strong>Score: </strong>{{ item.Score }}</div>
+                                <div v-if="item.GradingType=='Grade'"><strong>Grade: </strong>{{ item.Grade }}</div>
+                            </h6>
                             <small class="text-muted"> {{ item.AssessmentType }}@{{ new Date(item.AssessmentDate).toLocaleDateString("en-UK") }}</small>
                             </div>
                         </a>
                     </div>
 
                     <ul class="pagination mt-3" id="pagination">
-                        <li class="page-item" v-for="(item, index) in pages" :key="index" @click="selectPage"><a class="page-link" href="#">{{ item }}</a></li>
+                        <li class="page-item" v-for="(item, index) in pages" :key="index" @click="selectPage(item)"><a class="page-link" href="#">{{ item }}</a></li>
                     </ul>
                 </div>
             </div>
@@ -144,6 +145,8 @@
 
 
 <script>
+let StudentID, Subject, Class, AssessmentType, StartDate, EndDate, page=1;
+
 
 export default {
     name: 'QueryView',
@@ -154,18 +157,22 @@ export default {
         }
     },
     methods: {
-        async search() {
+        search() {
+            StudentID = document.getElementById("id").value;
+            Subject = document.getElementById("subject").value;
 
-            let StudentID = document.getElementById("id").value;
-            let Subject = document.getElementById("subject").value;
+            Class = document.querySelector('input[name="class"]:checked') ? document.querySelector('input[name="class"]:checked').value : null;
 
-            let Class = document.querySelector('input[name="class"]:checked') ? document.querySelector('input[name="class"]:checked').value : null;
+            AssessmentType = document.getElementById("assessment_type").value;
+            StartDate = document.getElementById("assessment_date-start").value;
+            EndDate = document.getElementById("assessment_date-end").value;
+            
+            document.querySelector('#myTab button[data-bs-target="#results-tab-pane"]').click() 
+            this.loadPage(1);
+        },
 
-            let AssessmentType = document.getElementById("assessment_type").value;
-            let StartDate = document.getElementById("assessment_date-start").value;
-            let EndDate = document.getElementById("assessment_date-end").value;
-
-
+        async loadPage(p) {
+            page = p
             var url = '/api/assessments/query?';
             let params = new URLSearchParams({
                 StudentID: StudentID,
@@ -173,7 +180,8 @@ export default {
                 Class: Class,
                 AssessmentType: AssessmentType,
                 StartDate: StartDate,
-                EndDate: EndDate
+                EndDate: EndDate,
+                page: page
             }); 
 
             let response = await fetch(url + params.toString());
@@ -181,8 +189,6 @@ export default {
 
             if (response.ok) {
                 let data = await response.json();
-                document.querySelector('#myTab button[data-bs-target="#results-tab-pane"]').click() 
-
                 this.records = data.assessment;
 
                 let arr = [];
@@ -191,21 +197,17 @@ export default {
                 }
 
                 this.pages = arr;
-
-        
             } else {
                 console.log("HTTP-Error: " + response.status);
             }
-
         },
-
 
         selectItem() {
             
         },
 
-        selectPage() {
-            
+        selectPage(p) {
+            this.loadPage(p)
         },
 
         showAssessment() {
