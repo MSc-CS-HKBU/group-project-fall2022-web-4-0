@@ -15,7 +15,7 @@ MongoClient.connect(url, function (err, client) {
 });
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
@@ -47,22 +47,22 @@ router.get('/api/assessment/:id', async function (req, res) {
 
   if (!result) return res.status(404).send('Unable to find the requested record!');
 
-  res.status(200).json({result});
+  res.status(200).json({ result });
 
 });
 
 router.get('/api/assessments', async function (req, res) {
-  
+
   let result = await db.collection("assessment").find().toArray();
 
   if (!result) return res.status(404).send('Unable to find the requested resource!');
 
-  res.status(200).json({result});
+  res.status(200).json({ result });
 
 });
 
 router.get('/api/assessments/query', async function (req, res) {
-  
+
   var perPage = Math.max(req.query.perPage, 20) || 20;
 
   var whereClause = {};
@@ -72,7 +72,7 @@ router.get('/api/assessments/query', async function (req, res) {
 
   if (req.query.Class)
     whereClause.Class = req.query.Class;
-  
+
   if (req.query.Subject)
     whereClause.Subject = req.query.Subject;
 
@@ -80,7 +80,7 @@ router.get('/api/assessments/query', async function (req, res) {
     whereClause.AssessmentType = req.query.AssessmentType;
 
   if (req.query.StartDate && req.query.EndDate)
-      whereClause.AssessmentDate = {$gte: new Date(req.query.StartDate), $lte: new Date(req.query.EndDate)};
+    whereClause.AssessmentDate = { $gte: new Date(req.query.StartDate), $lte: new Date(req.query.EndDate) };
 
   let result = await db.collection("assessment").find(whereClause, {
     limit: perPage,
@@ -91,7 +91,7 @@ router.get('/api/assessments/query', async function (req, res) {
 
   var pages = Math.ceil(await db.collection("assessment").find(whereClause).count() / perPage);
 
-  res.status(200).json({assessment:result, pages: pages, perPage: perPage});
+  res.status(200).json({ assessment: result, pages: pages, perPage: perPage });
 
 });
 
@@ -106,7 +106,7 @@ router.get('/api/assessments/:field/:value', async function (req, res) {
 
   if (!result) return res.status(404).send('Unable to find the requested resource!');
 
-  res.status(200).json({result});
+  res.status(200).json({ result });
 
 });
 
@@ -144,46 +144,46 @@ router.post('/api/plotChartData', async function (req, res) {
 
   if (req.body.constructor === Object && Object.keys(req.body).length === 0)
     return res.status(404).send('Unable to find the requested resource!');
-     
+
   var whereClause = req.body;
 
   let result = await db.collection("assessment").find(whereClause).toArray();
 
   if (!result) return res.status(404).send('Unable to find the requested resource!');
 
-  res.status(200).json({result});
+  res.status(200).json({ result });
 
 });
 
 router.get('/api/plotChartAssessmentByClass', async function (req, res) {
   const groupBy = [
     {
-      $match:{
+      $match: {
         GradingType: "Score"
       }
     },
     {
       $group: {
-        _id: {AssessmentDate:"$AssessmentDate", Class:"$Class"},
+        _id: { AssessmentDate: "$AssessmentDate", Class: "$Class" },
         avg: { $avg: "$Score" }
       }
     },
     {
-      $sort:{ _id : 1 }
+      $sort: { _id: 1 }
     }
   ];
 
   const result = await db.collection("assessment").aggregate(groupBy).toArray();
-  
+
   if (!result) return res.status(404).send('Unable to find the requested resource!');
 
-  res.status(200).json({result});
+  res.status(200).json({ result });
 });
 
 router.get('/api/plotChartDSEvsExam', async function (req, res) {
   const groupBy = [
     {
-      $match:{
+      $match: {
         AssessmentType: "DSE"
       }
     },
@@ -194,21 +194,21 @@ router.get('/api/plotChartDSEvsExam', async function (req, res) {
       }
     },
     {
-      $sort:{ _id : 1 }
+      $sort: { _id: 1 }
     }
   ];
 
   const result = await db.collection("assessment").aggregate(groupBy).toArray();
-  
+
   if (!result) return res.status(404).send('Unable to find the requested resource!');
 
-  res.status(200).json({result});
+  res.status(200).json({ result });
 });
 
 router.get('/api/plotChartDSEGrade', async function (req, res) {
   const groupBy = [
     {
-      $match:{
+      $match: {
         AssessmentType: "DSE"
       }
     },
@@ -219,23 +219,23 @@ router.get('/api/plotChartDSEGrade', async function (req, res) {
       }
     },
     {
-      $sort:{ _id : 1 }
+      $sort: { _id: 1 }
     }
   ];
 
   const result = await db.collection("assessment").aggregate(groupBy).toArray();
-  
+
   if (!result) return res.status(404).send('Unable to find the requested resource!');
 
-  res.status(200).json({result});
+  res.status(200).json({ result });
 });
 
 router.get('/api/plotChartPassDSE', async function (req, res) {
-  
+
   // Reference: https://www.hkeaa.edu.hk/en/recognition/hkdse_recognition/local/
   var groupBy1 = [
     {
-      $match:{
+      $match: {
         AssessmentType: "DSE"
       }
     },
@@ -249,7 +249,7 @@ router.get('/api/plotChartPassDSE', async function (req, res) {
 
   var groupBy2 = [
     {
-      $match:{
+      $match: {
         AssessmentType: "DSE",
         $or: [
           {
@@ -260,7 +260,7 @@ router.get('/api/plotChartPassDSE', async function (req, res) {
             Subject: { $in: ["MATH", "LIBS"] },
             Grade: { $in: ["2", "3", "4", "5", "6", "7"] }
           }
-        ]      
+        ]
       }
     },
     {
@@ -289,20 +289,77 @@ router.get('/api/plotChartPassDSE', async function (req, res) {
   var num_pass = result2.length;
   var num_fail = result1.length - result2.length;
 
-  res.status(200).json({result:[
-    {
-      name: "Meet or Above (3322)",
-      value: num_pass
-    }, {
-      name: "Not Meet Minimum",
-      value: num_fail
-    }
-  ]});
+  res.status(200).json({
+    result: [
+      {
+        name: "Meet or Above (3322)",
+        value: num_pass
+      }, {
+        name: "Not Meet Minimum",
+        value: num_fail
+      }
+    ]
+  });
 
 });
 
+router.post('/api/plotChartData', async function (req, res) {
 
+  if (req.body.constructor === Object && Object.keys(req.body).length === 0)
+    return res.status(404).send('Unable to find the requested resource!');
 
+  var whereClause = req.body;
 
+  let result = await db.collection("assessment").find(whereClause).toArray();
+
+  if (!result) return res.status(404).send('Unable to find the requested resource!');
+
+  res.status(200).json({ result });
+
+});
+
+router.get('/api/plotChartSubjectDSE', async function (req, res) {
+
+  var groupBy = [
+    {
+      $match: {
+        AssessmentType: "DSE"
+      }
+    },
+    {
+      $group: {
+        _id: { Subject: "$Subject", Grade: "$Grade" },
+        count: { $sum: 1 }
+      }
+    },
+    {
+      $sort: {
+        _id: -1
+      }
+    }
+  ];
+  
+  let result = await db.collection("assessment").aggregate(groupBy).toArray();
+
+  if (!result) return res.status(404).send('Unable to find the requested resource!');
+
+  var data = [];
+
+  const Subject = ["CHIN", "ENG", "MATH", "LIBS"];
+
+  for (var j = 0; j < Subject.length; j++) {
+    var obj = {};
+    for (var i = 0; i < result.length; i++) {
+      if (result[i]._id.Subject === Subject[j]) {
+        obj.Subject = result[i]._id.Subject;
+        obj[result[i]._id.Grade] = result[i].count;
+      }
+    }
+    data[j] = obj;
+  }
+
+  return res.status(200).json({ data });
+
+});
 
 module.exports = router;
