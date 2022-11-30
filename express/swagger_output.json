@@ -11,12 +11,17 @@
     "http"
   ],
   "paths": {
+    "/": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
     "/api/assessment": {
       "post": {
-        "description": "CREATE a new assessment record",
-        "parameters": [
-          {"in":"body"}
-        ],
+        "description": "",
+        "parameters": [],
         "responses": {
           "201": {
             "description": "Created"
@@ -29,9 +34,20 @@
     },
     "/api/assessments": {
       "post": {
-        "description": "CREATE multiple assessment records",
-        "parameters": [          
-          {"in":"body"}
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "example": "any"
+                }
+              }
+            }
+          }
         ],
         "responses": {
           "201": {
@@ -43,7 +59,7 @@
         }
       },
       "get": {
-        "description": "READ multiple assessment records",
+        "description": "",
         "parameters": [],
         "responses": {
           "200": {
@@ -57,7 +73,7 @@
     },
     "/api/assessment/{id}": {
       "get": {
-        "description": "READ one specific assessment record",
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -76,7 +92,7 @@
         }
       },
       "put": {
-        "description": "UPDATE one specific assessment record",
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -95,7 +111,7 @@
         }
       },
       "delete": {
-        "description": "DELETE one specific assessment record",
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -114,9 +130,64 @@
         }
       }
     },
+    "/api/assessments/query": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "perPage",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "StudentID",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "Class",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "Subject",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "AssessmentType",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "StartDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "EndDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
     "/api/assessments/{field}/{value}": {
       "get": {
-        "description": "READ data by filtering with a field",
+        "description": "",
         "parameters": [
           {
             "name": "field",
@@ -137,6 +208,72 @@
           },
           "404": {
             "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/plotChartData": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "constructor": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/plotChartPassDSE": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/plotChartSubjectDSE": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/users/": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }

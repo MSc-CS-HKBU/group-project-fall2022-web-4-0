@@ -10,7 +10,7 @@ var usersRouter = require('./routes/users');
 var app = express();
 
 const swaggerUi = require('swagger-ui-express');
-const swaggerFile = require('./swagger_output.json');
+const swaggerFile = require('./swagger.json');
 
 var options = {
   explorer: true
