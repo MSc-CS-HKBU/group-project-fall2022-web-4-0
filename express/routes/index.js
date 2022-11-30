@@ -155,6 +155,81 @@ router.post('/api/plotChartData', async function (req, res) {
 
 });
 
+router.get('/api/plotChartAssessmentByClass', async function (req, res) {
+  const groupBy = [
+    {
+      $match:{
+        GradingType: "Score"
+      }
+    },
+    {
+      $group: {
+        _id: {AssessmentDate:"$AssessmentDate", Class:"$Class"},
+        avg: { $avg: "$Score" }
+      }
+    },
+    {
+      $sort:{ _id : 1 }
+    }
+  ];
+
+  const result = await db.collection("assessment").aggregate(groupBy).toArray();
+  
+  if (!result) return res.status(404).send('Unable to find the requested resource!');
+
+  res.status(200).json({result});
+});
+
+router.get('/api/plotChartDSEvsExam', async function (req, res) {
+  const groupBy = [
+    {
+      $match:{
+        AssessmentType: "DSE"
+      }
+    },
+    {
+      $group: {
+        _id: "$Grade",
+        count: { $sum: 1 }
+      }
+    },
+    {
+      $sort:{ _id : 1 }
+    }
+  ];
+
+  const result = await db.collection("assessment").aggregate(groupBy).toArray();
+  
+  if (!result) return res.status(404).send('Unable to find the requested resource!');
+
+  res.status(200).json({result});
+});
+
+router.get('/api/plotChartDSEGrade', async function (req, res) {
+  const groupBy = [
+    {
+      $match:{
+        AssessmentType: "DSE"
+      }
+    },
+    {
+      $group: {
+        _id: "$Grade",
+        count: { $sum: 1 }
+      }
+    },
+    {
+      $sort:{ _id : 1 }
+    }
+  ];
+
+  const result = await db.collection("assessment").aggregate(groupBy).toArray();
+  
+  if (!result) return res.status(404).send('Unable to find the requested resource!');
+
+  res.status(200).json({result});
+});
+
 router.get('/api/plotChartPassDSE', async function (req, res) {
   
   // Reference: https://www.hkeaa.edu.hk/en/recognition/hkdse_recognition/local/
@@ -238,49 +313,6 @@ router.post('/api/plotChartData', async function (req, res) {
   if (!result) return res.status(404).send('Unable to find the requested resource!');
 
   res.status(200).json({result});
-
-});
-
-router.get('/api/plotChartSubjectDSE', async function (req, res) {
-  
-  var groupBy = [
-    {
-      $match:{
-        AssessmentType: "DSE"
-      }
-    },
-    {
-      $group: {
-        _id: { Subject: "$Subject", Grade: "$Grade" },
-        count: { $sum: 1 }
-      }
-    },
-    {
-      $sort: {
-        _id: -1
-      }
-    }
-  ];
-  let result = await db.collection("assessment").aggregate(groupBy).toArray();
-
-  if (!result) return res.status(404).send('Unable to find the requested resource!');
-
-  var data = [];
-
-  const Subject = ["CHIN", "ENG", "MATH", "LIBS"];
-
-  for (var j = 0; j < Subject.length; j++) {
-    var obj = {};
-    for (var i = 0; i < result.length; i++) {
-      if (result[i]._id.Subject === Subject[j]) {
-        obj.Subject = result[i]._id.Subject;
-        obj[result[i]._id.Grade] = result[i].count;
-      }
-    }
-    data[j]=obj;
-  }
-
-  return res.status(200).json({data});
 
 });
 

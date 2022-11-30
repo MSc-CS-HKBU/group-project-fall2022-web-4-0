@@ -1,20 +1,20 @@
 <template>
     <div class="container">
 
-        <div class="card pt-3 ps-5 pe-5 pb-3">
+        <div class="card pt-3 ps-5 pe-5 pb-3" style="max-width: 800px; margin: 0 auto;">
           <div id="liveAlertPlaceholder"></div>
 
           <form method="post" @submit.prevent="presubmit" id="input_form">
             <div class="mb-3 row">
-                <label for="staticEmail" class="col-md-3 col-lg-2 col-form-label">Student ID</label>
-                <div class="col-md-9 col-lg-10">
+                <label for="staticEmail" class="col-md-3 col-lg-3 col-form-label">Student ID</label>
+                <div class="col-md-9 col-lg-9">
                     <input type="number" class="form-control text-center" id="id" name="id" min="100000" max="999999" maxlength="6" required placeholder="Student ID">
                 </div>
             </div>
             
             <div class="mb-3 row">
-                <label for="inputPassword" class="col-md-3 col-lg-2 col-form-label">Subject</label>
-                <div class="col-md-9 col-lg-10">
+                <label for="inputPassword" class="col-md-3 col-lg-3 col-form-label">Subject</label>
+                <div class="col-md-9 col-lg-9">
                     <select class="form-select text-center" id="subject" name="subject" required>
                         <option value="" selected disabled>Select subject:</option>
                         <option value="CHIN">Chinese</option>
@@ -26,8 +26,8 @@
             </div>
 
             <div class="mb-3 row">
-                <label for="inputPassword" class="col-md-3 col-lg-2 col-form-label">Class</label>
-                <div class="col-md-9 col-lg-10">
+                <label for="inputPassword" class="col-md-3 col-lg-3 col-form-label">Class</label>
+                <div class="col-md-9 col-lg-9">
                     <div class="btn-group" style="width:100%" role="group" aria-label="Basic checkbox toggle button group">
                         <input type="radio" class="btn-check" id="class-A" name="class" value="A" autocomplete="off" required checked>
                         <label class="btn btn-outline-dark" for="class-A">A</label>
@@ -44,14 +44,14 @@
                 </div>
             </div>
             <div class="mb-3 row">
-                <label for="inputPassword" class="col-md-3 col-lg-2 col-form-label">Assessment Date</label>
-                <div class="col-md-9 col-lg-10">
+                <label for="inputPassword" class="col-md-3 col-lg-3 col-form-label">Assessment Date</label>
+                <div class="col-md-9 col-lg-9">
                     <input type="date" class="form-control text-center" id="assessment_date" name="assessment_date" value="2022-09-01" required>
                 </div>
             </div>
             <div class="mb-3 row">
-                <label for="inputPassword" class="col-md-3 col-lg-2 col-form-label">Assessment Type</label>
-                <div class="col-md-9 col-lg-10">
+                <label for="inputPassword" class="col-md-3 col-lg-3 col-form-label">Assessment Type</label>
+                <div class="col-md-9 col-lg-9">
                     <select class="form-select text-center" id="assessment_type"  name="assessment_type" required>
                         <option value="" selected disabled>Select assessement type:</option>
                         <option value="Test">Test</option>
@@ -62,8 +62,8 @@
             </div>
 
             <div class="mb-3 row">
-                <label for="inputPassword" class="col-md-3 col-lg-2 col-form-label">Grading Type</label>
-                <div class="col-md-9 col-lg-10">
+                <label for="inputPassword" class="col-md-3 col-lg-3 col-form-label">Grading Type</label>
+                <div class="col-md-9 col-lg-9">
                     <div class="btn-group" style="width:100%" role="group">
                         <input type="radio" class="btn-check" id="grading_type-score" name="grading_type" autocomplete="off" value="Score" required @change="changeSection" checked>
                         <label class="btn btn-outline-dark" for="grading_type-score">Score</label>
@@ -76,29 +76,29 @@
 
             <div id="section-score" class="toggle-content is-visible">
               <div class="mb-3 row">
-                  <label for="staticEmail" class="col-md-3 col-lg-2 col-form-label">Max Score</label>
-                  <div class="col-md-9 col-lg-10">
+                  <label for="staticEmail" class="col-md-3 col-lg-3 col-form-label">Max Score</label>
+                  <div class="col-md-9 col-lg-9">
                       <input type="number" class="form-control text-center" id="max_score" name="max_score" min="0" max="9999" placeholder="100">
                   </div>
               </div>
 
               <div class="mb-3 row">
-                  <label for="staticEmail" class="col-md-3 col-lg-2 col-form-label">Min Score</label>
-                  <div class="col-md-9 col-lg-10">
+                  <label for="staticEmail" class="col-md-3 col-lg-3 col-form-label">Min Score</label>
+                  <div class="col-md-9 col-lg-9">
                       <input type="number" class="form-control text-center" id="min_score" name="min_score" min="0" max="9999" placeholder="0">
                   </div>
               </div>
 
               <div class="mb-3 row">
-                  <label for="staticEmail" class="col-md-3 col-lg-2 col-form-label">Score</label>
-                  <div class="col-md-9 col-lg-10">
+                  <label for="staticEmail" class="col-md-3 col-lg-3 col-form-label">Score</label>
+                  <div class="col-md-9 col-lg-9">
                       <input type="number" class="form-control text-center" id="score" name="score" min="0" max="9999" placeholder="80">
                   </div>
               </div>
 
               <div class="mb-3 row">
-                <label for="staticEmail" class="col-md-3 col-lg-2 col-form-label">Rank</label>
-                <div class="col-md-9 col-lg-10">
+                <label for="staticEmail" class="col-md-3 col-lg-3 col-form-label">Rank</label>
+                <div class="col-md-9 col-lg-9">
                     <input type="number" class="form-control text-center" id="rank" name="rank" min="1" max="999" placeholder="10">
                 </div>
               </div>
@@ -109,8 +109,8 @@
 
             <div id="section-grade" class="toggle-content">
               <div class="mb-3 row">
-                  <label for="inputPassword" class="col-md-3 col-lg-2 col-form-label">Grade Range</label>
-                  <div class="col-md-9 col-lg-10">
+                  <label for="inputPassword" class="col-md-3 col-lg-3 col-form-label">Grade Range</label>
+                  <div class="col-md-9 col-lg-9">
                       <select class="form-select text-center" id="grade_range" name="grade_range">
                           <option value="" selected disabled>Select grade range:</option>
                           <option value="1 2 3 4 5 6 7" selected>1 2 3 4 5 5* 5**</option>
@@ -118,8 +118,8 @@
                   </div>
               </div>
               <div class="mb-3 row">
-                  <label for="inputPassword" class="col-md-3 col-lg-2 col-form-label">Grade Range</label>
-                  <div class="col-md-9 col-lg-10">
+                  <label for="inputPassword" class="col-md-3 col-lg-3 col-form-label">Grade Range</label>
+                  <div class="col-md-9 col-lg-9">
                       <select class="form-select text-center" id="grade" name="grade">
                           <option value="" selected disabled>Select grade:</option>
                           <option value="1">1</option>
